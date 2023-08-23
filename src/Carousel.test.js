@@ -73,7 +73,7 @@ it("works when you click on the left arrow", function () {
   // move backward in the carousel
   fireEvent.click(leftArrow);
 
-  // expect the second image to show, but not the first
+  // expect the second image to Not show, but the first to show
   expect(
     container.querySelector('img[alt="testing image 2"]')
   ).not.toBeInTheDocument();
@@ -81,4 +81,27 @@ it("works when you click on the left arrow", function () {
     container.querySelector('img[alt="testing image 1"]')
   ).toBeInTheDocument();
 });
+
+it("Arrows are hidden or not", function(){
+  const { container } = render(
+    <Carousel
+      photos={TEST_IMAGES}
+      title="images for testing"
+    />
+  );
+
+  const rightArrow = container.querySelector(".bi-arrow-right-circle");
+  const leftArrow = container.querySelector(".bi-arrow-left-circle");
+
+  expect(leftArrow).toHaveClass("hidden")
+  expect(rightArrow).not.toHaveClass("hidden")
+
+  //move forward twice
+  fireEvent.click(rightArrow)
+  //TODO: expect left and right arrow are not hidden here 
+  fireEvent.click(rightArrow)
+
+  expect(rightArrow).toHaveClass("hidden")
+  expect(leftArrow).not.toHaveClass("hidden")
+})
 
